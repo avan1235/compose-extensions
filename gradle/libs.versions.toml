@@ -1,0 +1,39 @@
+[versions]
+accompanist = "0.32.0"
+# @keep
+android-compileSdk = "34"
+# @pin
+android-gradle-plugin = "8.1.0"
+# @keep
+android-minSdk = "26"
+# @keep
+android-targetSdk = "34"
+barcodeScanning = "17.2.0"
+cameraX = "1.2.3"
+compose = "1.5.3"
+# @keep
+compose-extensions = "1.0.0"
+gradle-versions = "0.49.0"
+# @pin
+kotlin = "1.9.10"
+version-catalog-update = "0.8.1"
+webcamCapture = "0.3.12"
+webcamCaptureDriverNative = "1.0.0"
+zxing-core = "3.5.2"
+
+[libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+androidx-camera = { module = "androidx.camera:camera-camera2", version.ref = "cameraX" }
+androidx-cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraX" }
+androidx-cameraPreview = { module = "androidx.camera:camera-view", version.ref = "cameraX" }
+mlkit-barcodeScanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
+webcam-capture = { module = "com.github.sarxos:webcam-capture", version.ref = "webcamCapture" }
+webcam-capture-driver-native = { module = "io.github.eduramiba:webcam-capture-driver-native", version.ref = "webcamCaptureDriverNative" }
+zxing-javase = { module = "com.google.zxing:javase", version.ref = "zxing-core" }
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
+gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradle-versions" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
