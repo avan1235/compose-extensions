@@ -9,7 +9,7 @@ android-minSdk = "26"
 # @keep
 android-targetSdk = "34"
 barcodeScanning = "17.2.0"
-cameraX = "1.2.3"
+cameraX = "1.3.0"
 compose = "1.5.3"
 # @keep
 compose-extensions = "1.0.0"
