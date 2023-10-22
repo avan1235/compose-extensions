@@ -29,11 +29,13 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
+
+                implementation(project(":util"))
             }
         }
         getByName("androidMain") {
             dependencies {
-                implementation(libs.accompanist.systemuicontroller)
+                implementation(libs.accompanist.permissions)
             }
         }
         val iosX64Main by getting
@@ -46,12 +48,18 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
+        getByName("desktopMain") {
+            dependencies {
+                implementation(libs.webcam.capture)
+                implementation(libs.webcam.capture.driver.native)
+            }
+        }
     }
 }
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    namespace = "in.procyk.compose.util"
+    namespace = "in.procyk.compose.camera.permission"
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

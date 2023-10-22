@@ -12,23 +12,6 @@ expect fun QRCodeScanner(
     missingCameraContent: @Composable () -> Unit = {},
 )
 
-@Composable
-expect fun rememberCameraPermissionState(): CameraPermissionState
-
-interface CameraPermissionState {
-    val isAvailable: Boolean
-
-    val permission: CameraPermission
-
-    fun launchRequest()
-}
-
-enum class CameraPermission {
-    Granted, Denied;
-
-    val isGranted: Boolean get() = this == Granted
-}
-
 sealed interface QRResult {
 
     class QRSuccess private constructor(val nonEmptyCodes: List<String>) : QRResult {

@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import com.github.eduramiba.webcamcapture.drivers.NativeDriver
 import com.github.sarxos.webcam.Webcam
 import com.github.sarxos.webcam.WebcamException
 import com.github.sarxos.webcam.WebcamResolution
@@ -20,7 +19,6 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import `in`.procyk.compose.util.OnceLaunchedEffect
-import `in`.procyk.compose.util.runIfNonNull
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
@@ -72,31 +70,6 @@ actual fun QRCodeScanner(
         }
     }
 
-}
-
-@Composable
-actual fun rememberCameraPermissionState(): CameraPermissionState = remember {
-    object : CameraPermissionState {
-        init {
-            val os = System.getProperty("os.name")
-            if (os.contains("mac", ignoreCase = true)) {
-                Webcam.setDriver(NativeDriver())
-            }
-        }
-
-        override val isAvailable: Boolean by lazy {
-            try {
-                runIfNonNull(Webcam.getDefault()) { true } ?: false
-            } catch (_: WebcamException) {
-                false
-            }
-        }
-
-        override val permission: CameraPermission
-            get() = if (isAvailable) CameraPermission.Granted else CameraPermission.Denied
-
-        override fun launchRequest() = Unit
-    }
 }
 
 @Composable

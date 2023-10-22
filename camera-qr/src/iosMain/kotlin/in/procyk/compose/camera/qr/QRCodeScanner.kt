@@ -5,8 +5,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.UIKitView
-import `in`.procyk.compose.camera.qr.CameraPermission.Denied
-import `in`.procyk.compose.camera.qr.CameraPermission.Granted
 import `in`.procyk.compose.util.OnceLaunchedEffect
 import `in`.procyk.compose.util.runIfNonNull
 import kotlinx.cinterop.BetaInteropApi
@@ -49,37 +47,6 @@ actual fun QRCodeScanner(
         else -> {
             OnceLaunchedEffect { onIsLoadingChange(false) }
             missingCameraContent()
-        }
-    }
-}
-
-@Composable
-actual fun rememberCameraPermissionState(): CameraPermissionState {
-    var cameraPermission by remember { mutableStateOf(Denied) }
-
-    OnceLaunchedEffect {
-        cameraPermission = when (AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)) {
-            AVAuthorizationStatusAuthorized -> Granted
-            AVAuthorizationStatusDenied,
-            AVAuthorizationStatusRestricted,
-            AVAuthorizationStatusNotDetermined,
-            -> Denied
-
-            else -> error("Unexpected AVAuthorizationStatus")
-        }
-    }
-
-    return remember {
-        object : CameraPermissionState {
-            override val isAvailable: Boolean = true
-
-            override val permission: CameraPermission get() = cameraPermission
-
-            override fun launchRequest() {
-                AVCaptureDevice.requestAccessForMediaType(mediaType = AVMediaTypeVideo) { success ->
-                    cameraPermission = if (success) Granted else Denied
-                }
-            }
         }
     }
 }

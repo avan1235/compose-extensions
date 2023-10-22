@@ -66,7 +66,7 @@ kotlin {
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    namespace = "in.procyk.compose"
+    namespace = "in.procyk.compose.camera.qr"
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

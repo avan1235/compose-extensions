@@ -1,6 +1,7 @@
 rootProject.name = "compose-extensions"
 
 includeBuild("convention-plugins")
+include("camera-permission")
 include("camera-qr")
 include("util")
 
