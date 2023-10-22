@@ -20,7 +20,7 @@ are self-contained and allow to deploy compose applications to Android, iOS and 
 To make the extension available, place 
 
 ```kotlin
-implementation("in.procyk.compose:extension-name:0.0.1")
+implementation("in.procyk.compose:extension-name:0.0.2")
 ```
 
 into your `commonMain` source set's dependencies block, where `extension-name` should be replaced with the
@@ -29,3 +29,5 @@ proper name from the list of available extensions.
 ## Available Extensions
 
 - `camera-qr` - detect QR codes camera view
+- `camera-permission` - ask for camera permission
+- `util` - handy functions to work with compose
