@@ -2,7 +2,7 @@
 [![Platforms](https://img.shields.io/badge/desktop-Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://github.com/avan1235/compose-extensions/releases)
 
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.10-green.svg?logo=kotlin)](http://kotlinlang.org)
-[![Maven Central](https://img.shields.io/maven-central/v/in.procyk.compose/camera-qr?label=Maven%20Central&color=green)](https://central.sonatype.com/artifact/in.procyk.compose/camera-qr)
+[![Maven Central](https://img.shields.io/maven-central/v/in.procyk.compose/camera-qr?label=Maven%20Central&color=green)](https://central.sonatype.com/namespace/in.procyk.compose)
 [![Latest Release](https://img.shields.io/github/v/release/avan1235/compose-extensions?label=Release&color=green)](https://github.com/avan1235/compose-extensions/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/avan1235/compose-extensions/release.yml?label=Build&color=green)](https://github.com/avan1235/compose-extensions/actions/workflows/release.yml)
 
