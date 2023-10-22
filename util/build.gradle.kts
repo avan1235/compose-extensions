@@ -29,19 +29,11 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-
-                implementation(project(":util"))
             }
         }
         getByName("androidMain") {
             dependencies {
-                implementation(libs.androidx.camera)
-                implementation(libs.androidx.cameraLifecycle)
-                implementation(libs.androidx.cameraPreview)
-
-                implementation(libs.mlkit.barcodeScanning)
-
-                implementation(libs.accompanist.permissions)
+                implementation(libs.accompanist.systemuicontroller)
             }
         }
         val iosX64Main by getting
@@ -53,13 +45,6 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-        }
-        getByName("desktopMain") {
-            dependencies {
-                implementation(libs.webcam.capture)
-                implementation(libs.webcam.capture.driver.native)
-                implementation(libs.zxing.javase)
-            }
         }
     }
 }

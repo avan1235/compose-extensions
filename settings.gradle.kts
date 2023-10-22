@@ -2,6 +2,7 @@ rootProject.name = "compose-extensions"
 
 includeBuild("convention-plugins")
 include("camera-qr")
+include("util")
 
 pluginManagement {
     repositories {

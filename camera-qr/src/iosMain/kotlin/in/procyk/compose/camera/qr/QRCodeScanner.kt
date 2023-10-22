@@ -5,10 +5,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.UIKitView
-import `in`.procyk.compose.camera.OnceLaunchedEffect
 import `in`.procyk.compose.camera.qr.CameraPermission.Denied
 import `in`.procyk.compose.camera.qr.CameraPermission.Granted
-import `in`.procyk.compose.camera.runIfNonNull
+import `in`.procyk.compose.util.OnceLaunchedEffect
+import `in`.procyk.compose.util.runIfNonNull
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi

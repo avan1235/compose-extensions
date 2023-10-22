@@ -19,8 +19,8 @@ import com.google.zxing.NotFoundException
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
-import `in`.procyk.compose.camera.OnceLaunchedEffect
-import `in`.procyk.compose.camera.runIfNonNull
+import `in`.procyk.compose.util.OnceLaunchedEffect
+import `in`.procyk.compose.util.runIfNonNull
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
