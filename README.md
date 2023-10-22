@@ -30,5 +30,35 @@ proper name from the list of available extensions.
 ## Available Extensions
 
 - `camera-qr` - detect QR codes camera view
+    ```kotlin
+    implementation("in.procyk.compose:camera-qr:0.0.1")
+    ```
+    - for Android Application add to [AndroidManifest.xml](./examples/src/androidMain/AndroidManifest.xml)
+      ```xml
+      <uses-permission android:name="android.permission.CAMERA"/>
+      <uses-feature
+          android:name="android.hardware.camera"
+          android:required="false"/>```
+
+    - for iOS Application add `Privacy - Camera Usage Description` entry to [Info.plist](./examples/xcode/iosApp/Info.plist)
+      ```xml
+      <key>NSCameraUsageDescription</key>
+      <string></string>
+      ```
+   
+    - for Desktop Application add to [build.gradle.kts](./examples/build.gradle.kts)
+      ```kotlin
+      runtimeEntitlementsFile.set(project.file("runtime-entitlements.plist"))
+      infoPlist {
+          extraKeysRawXml = """
+              <key>NSCameraUsageDescription</key>
+              <string></string>
+          """.trimIndent()
+      }
+      ```
+      to your `macOS { ... }` block  and include 
+      [runtime-entitlements.plist](./examples/runtime-entitlements.plist) in your project source files
+
 - `camera-permission` - ask for camera permission
+
 - `util` - handy functions to work with compose
