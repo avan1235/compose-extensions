@@ -34,12 +34,7 @@ fun SystemBarsScreen(
                     .background(bottom)
             )
         }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(object : WindowInsets by WindowInsets.systemBars {
-                    override fun getBottom(density: Density): Int = 0
-                }),
+        NoBottomBarScreen(
             contentAlignment = contentAlignment,
             propagateMinConstraints = propagateMinConstraints,
             content = content,
@@ -55,6 +50,24 @@ fun NoSystemBarsScreen(
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
+        contentAlignment = contentAlignment,
+        propagateMinConstraints = propagateMinConstraints,
+        content = content,
+    )
+}
+
+@Composable
+fun NoBottomBarScreen(
+    contentAlignment: Alignment = Alignment.TopStart,
+    propagateMinConstraints: Boolean = false,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(object : WindowInsets by WindowInsets.systemBars {
+                override fun getBottom(density: Density): Int = 0
+            }),
         contentAlignment = contentAlignment,
         propagateMinConstraints = propagateMinConstraints,
         content = content,
