@@ -36,9 +36,9 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(compose.animationGraphics)
 
-                implementation("in.procyk.compose:camera-permission:0.0.2")
-                implementation("in.procyk.compose:camera-qr:0.0.2")
-                implementation("in.procyk.compose:util:0.0.2")
+                implementation("in.procyk.compose:camera-permission:1.5.3.0")
+                implementation("in.procyk.compose:camera-qr:1.5.3.0")
+                implementation("in.procyk.compose:util:1.5.3.0")
             }
         }
         getByName("androidMain") {

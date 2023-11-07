@@ -1,14 +1,16 @@
 package `in`.procyk.compose.examples
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Density
+import `in`.procyk.compose.util.NoBottomBarScreen
 import `in`.procyk.compose.util.NoSystemBarsScreen
 import `in`.procyk.compose.util.SystemBarsScreen
 
@@ -31,13 +33,7 @@ internal fun ExampleNoSystemBarsScreen(
             content()
         }
         if (isCloseAvailable) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(object : WindowInsets by WindowInsets.systemBars {
-                        override fun getBottom(density: Density): Int = 0
-                    }),
-            ) {
+            NoBottomBarScreen {
                 CloseButton(onVisibleChange)
             }
         }
