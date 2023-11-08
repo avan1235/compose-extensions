@@ -10,6 +10,9 @@ build/
 examples/.idea/**
 examples/.fleet/**
 
+### Xcode ###
+xcuserdata/
+
 ### Mac OS ###
 .DS_Store
 
