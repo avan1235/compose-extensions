@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     kotlin("multiplatform") version "1.9.10"
@@ -10,6 +11,9 @@ group = "in.procyk.compose"
 version = "1.0.0"
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    targetHierarchy.default()
+
     jvm()
 
     androidTarget()
