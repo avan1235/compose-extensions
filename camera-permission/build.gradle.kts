@@ -21,38 +21,27 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release")
     }
-    ios()
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
+        val desktopMain by getting
 
-                implementation(project(":util"))
-            }
-        }
-        getByName("androidMain") {
-            dependencies {
-                implementation(libs.accompanist.permissions)
-            }
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        getByName("iosMain") {
-            dependsOn(commonMain)
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
 
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+            implementation(project(":util"))
         }
-        getByName("desktopMain") {
-            dependencies {
-                implementation(libs.webcam.capture)
-                implementation(libs.webcam.capture.driver.native)
-            }
+        androidMain.dependencies {
+            implementation(libs.accompanist.permissions)
+        }
+        desktopMain.dependencies {
+            implementation(libs.webcam.capture)
+            implementation(libs.webcam.capture.driver.native)
         }
     }
 }

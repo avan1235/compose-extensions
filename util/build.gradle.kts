@@ -21,30 +21,19 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release")
     }
-    ios()
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
 
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-            }
-        }
-        getByName("androidMain") {
-            dependencies {
-                implementation(libs.accompanist.systemuicontroller)
-            }
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        getByName("iosMain") {
-            dependsOn(commonMain)
+    applyDefaultHierarchyTemplate()
 
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+        }
+        androidMain.dependencies {
+            implementation(libs.accompanist.systemuicontroller)
         }
     }
 }

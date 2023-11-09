@@ -21,45 +21,34 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release")
     }
-    ios()
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
+        val desktopMain by getting
 
-                implementation(project(":util"))
-            }
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+
+            implementation(project(":util"))
         }
-        getByName("androidMain") {
-            dependencies {
-                implementation(libs.androidx.camera)
-                implementation(libs.androidx.cameraLifecycle)
-                implementation(libs.androidx.cameraPreview)
+        androidMain.dependencies {
+            implementation(libs.androidx.camera)
+            implementation(libs.androidx.cameraLifecycle)
+            implementation(libs.androidx.cameraPreview)
 
-                implementation(libs.mlkit.barcodeScanning)
+            implementation(libs.mlkit.barcodeScanning)
 
-                implementation(libs.accompanist.permissions)
-            }
+            implementation(libs.accompanist.permissions)
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        getByName("iosMain") {
-            dependsOn(commonMain)
-
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        getByName("desktopMain") {
-            dependencies {
-                implementation(libs.webcam.capture)
-                implementation(libs.webcam.capture.driver.native)
-                implementation(libs.zxing.javase)
-            }
+        desktopMain.dependencies {
+            implementation(libs.webcam.capture)
+            implementation(libs.webcam.capture.driver.native)
+            implementation(libs.zxing.javase)
         }
     }
 }
