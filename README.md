@@ -1,8 +1,8 @@
 [![Platforms](https://img.shields.io/badge/mobile-Android%20%7C%20iOS-blue)](https://github.com/avan1235/compose-extensions/releases)
 [![Platforms](https://img.shields.io/badge/desktop-Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://github.com/avan1235/compose-extensions/releases)
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.10-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
-[![Kotlin](https://img.shields.io/badge/Compose%20Multiplatform-1.5.3-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
+[![Kotlin](https://img.shields.io/badge/Compose%20Multiplatform-1.5.10-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
 [![Maven Central](https://img.shields.io/maven-central/v/in.procyk.compose/camera-qr?label=Maven%20Central&color=green)](https://central.sonatype.com/namespace/in.procyk.compose)
 [![Latest Release](https://img.shields.io/github/v/release/avan1235/compose-extensions?label=Release&color=green)](https://github.com/avan1235/compose-extensions/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/avan1235/compose-extensions/release.yml?label=Build&color=green)](https://github.com/avan1235/compose-extensions/actions/workflows/release.yml)
@@ -21,7 +21,7 @@ are self-contained and allow to deploy compose applications to Android, iOS and 
 To make the extension available, place 
 
 ```kotlin
-implementation("in.procyk.compose:extension-name:0.0.2")
+implementation("in.procyk.compose:extension-name:1.5.10.0")
 ```
 
 into your `commonMain` source set's dependencies block, where `extension-name` should be replaced with the
@@ -31,7 +31,7 @@ proper name from the list of available extensions.
 
 - `camera-qr` - detect QR codes camera view
     ```kotlin
-    implementation("in.procyk.compose:camera-qr:0.0.1")
+    implementation("in.procyk.compose:camera-qr:1.5.10.0")
     ```
     - for Android Application add to [AndroidManifest.xml](./examples/src/androidMain/AndroidManifest.xml)
       ```xml
@@ -60,5 +60,11 @@ proper name from the list of available extensions.
       [runtime-entitlements.plist](./examples/runtime-entitlements.plist) in your project source files
 
 - `camera-permission` - ask for camera permission
+    ```kotlin
+    implementation("in.procyk.compose:camera-permission:1.5.10.0")
+    ```
 
 - `util` - handy functions to work with compose
+    ```kotlin
+    implementation("in.procyk.compose:util:1.5.10.0")
+    ```
