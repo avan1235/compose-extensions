@@ -1,24 +1,24 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    kotlin("multiplatform") version "1.9.10"
+    kotlin("multiplatform") version "1.9.20"
     id("com.android.application") version "8.1.0"
-    id("org.jetbrains.compose") version "1.5.3"
+    id("org.jetbrains.compose") version "1.5.10"
 }
 
 group = "in.procyk.compose"
 version = "1.0.0"
 
 kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    targetHierarchy.default()
-
-    jvm()
+    jvm("desktop")
 
     androidTarget()
-    ios()
+
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
+
+    applyDefaultHierarchyTemplate()
 
     listOf(
         iosX64(),
@@ -32,30 +32,26 @@ kotlin {
     }
 
     sourceSets {
-        getByName("commonMain") {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.animationGraphics)
+        val desktopMain by getting
 
-                implementation("in.procyk.compose:camera-permission:1.5.3.0")
-                implementation("in.procyk.compose:camera-qr:1.5.3.0")
-                implementation("in.procyk.compose:util:1.5.3.0")
-            }
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.animationGraphics)
+
+            implementation("in.procyk.compose:camera-permission:1.5.10.0")
+            implementation("in.procyk.compose:camera-qr:1.5.10.0")
+            implementation("in.procyk.compose:util:1.5.10.0")
         }
-        getByName("androidMain") {
-            dependencies {
-                api("androidx.activity:activity-compose:1.8.0-rc01")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.12.0")
-            }
+        androidMain.dependencies {
+            api("androidx.activity:activity-compose:1.8.0")
+            api("androidx.appcompat:appcompat:1.6.1")
+            api("androidx.core:core-ktx:1.12.0")
         }
-        getByName("jvmMain") {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
     }
 }
