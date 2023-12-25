@@ -4,6 +4,7 @@ includeBuild("convention-plugins")
 include("camera-permission")
 include("camera-qr")
 include("util")
+include("qr-code")
 
 pluginManagement {
     repositories {
