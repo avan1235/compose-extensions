@@ -3,19 +3,19 @@ accompanist = "0.32.0"
 # @keep
 android-compileSdk = "33"
 # @pin
-android-gradle-plugin = "8.1.2"
+android-gradle-plugin = "8.2.2"
 # @keep
 android-minSdk = "26"
 # @keep
 android-targetSdk = "33"
 barcodeScanning = "17.2.0"
 cameraX = "1.3.0"
-compose = "1.6.0-rc02"
+compose = "1.6.0-rc03"
 # @keep
-compose-extensions = "1.6.0-rc02.0"
+compose-extensions = "1.6.0-rc03.0"
 gradle-versions = "0.51.0"
 # @pin
-kotlin = "1.9.22"
+kotlin = "2.0.0-Beta4"
 version-catalog-update = "0.8.4"
 webcamCapture = "0.3.12"
 webcamCaptureDriverNative = "1.0.0"
