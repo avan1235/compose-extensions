@@ -10,12 +10,13 @@ android-minSdk = "26"
 android-targetSdk = "33"
 barcodeScanning = "17.2.0"
 cameraX = "1.3.0"
-compose = "1.6.0"
+compose = "1.6.0-rc02"
 # @keep
-compose-extensions = "1.6.0.0"
+compose-extensions = "1.6.0-rc02.1"
 gradle-versions = "0.51.0"
 # @pin
-kotlin = "2.0.0-Beta4"
+kotlin = "1.9.22"
+kotlinxDatetime = "0.6.0-RC.2"
 version-catalog-update = "0.8.4"
 webcamCapture = "0.3.12"
 webcamCaptureDriverNative = "1.0.0"
@@ -27,6 +28,7 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 androidx-camera = { module = "androidx.camera:camera-camera2", version.ref = "cameraX" }
 androidx-cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraX" }
 androidx-cameraPreview = { module = "androidx.camera:camera-view", version.ref = "cameraX" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 mlkit-barcodeScanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
 webcam-capture = { module = "com.github.sarxos:webcam-capture", version.ref = "webcamCapture" }
 webcam-capture-driver-native = { module = "io.github.eduramiba:webcam-capture-driver-native", version.ref = "webcamCaptureDriverNative" }
