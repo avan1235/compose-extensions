@@ -54,14 +54,14 @@ fun DefaultMonthHeader(
                 .name
                 .lowercase()
                 .replaceFirstChar { it.titlecase() },
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = monthState.currentMonth.year.toString(),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
