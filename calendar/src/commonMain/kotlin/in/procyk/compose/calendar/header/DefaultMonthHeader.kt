@@ -47,7 +47,7 @@ fun DefaultMonthHeader(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         DecrementButton(monthState = monthState)
-        Spacer(modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
         Text(
             modifier = Modifier.testTag("MonthLabel"),
             text = Month(monthState.currentMonth.month)
@@ -65,7 +65,7 @@ fun DefaultMonthHeader(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        Spacer(modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
         IncrementButton(monthState = monthState)
     }
 }

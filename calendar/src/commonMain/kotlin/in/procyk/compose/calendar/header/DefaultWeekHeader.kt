@@ -47,7 +47,7 @@ fun DefaultWeekHeader(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         DecrementButton(weekState = weekState)
-        Spacer(modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
         Text(
             modifier = Modifier.testTag("WeekLabel"),
             text = Month(weekState.currentWeek.yearMonth.month)
@@ -65,7 +65,7 @@ fun DefaultWeekHeader(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        Spacer(modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
         IncrementButton(monthState = weekState)
     }
 }
