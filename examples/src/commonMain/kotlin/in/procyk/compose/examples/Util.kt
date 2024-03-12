@@ -16,13 +16,10 @@ import `in`.procyk.compose.util.SystemBarsScreen
 
 @Composable
 internal fun ExampleNoSystemBarsScreen(
-    visible: Boolean = true,
-    onVisibleChange: (Boolean) -> Unit = {},
+    onClose: () -> Unit = {},
     isCloseAvailable: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    if (!visible) return
-
     NoSystemBarsScreen {
         Box(
             modifier = Modifier
@@ -34,7 +31,7 @@ internal fun ExampleNoSystemBarsScreen(
         }
         if (isCloseAvailable) {
             NoBottomBarScreen {
-                CloseButton(onVisibleChange)
+                CloseButton(onClose)
             }
         }
     }
@@ -42,13 +39,10 @@ internal fun ExampleNoSystemBarsScreen(
 
 @Composable
 internal fun ExampleSystemBarsScreen(
-    visible: Boolean = true,
-    onVisibleChange: (Boolean) -> Unit = {},
+    onClose: () -> Unit = {},
     isCloseAvailable: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    if (!visible) return
-
     SystemBarsScreen(
         top = MaterialTheme.colorScheme.background,
         bottom = MaterialTheme.colorScheme.background,
@@ -61,7 +55,7 @@ internal fun ExampleSystemBarsScreen(
         ) {
             content()
         }
-        if (isCloseAvailable) CloseButton(onVisibleChange)
+        if (isCloseAvailable) CloseButton(onClose)
     }
 }
 
@@ -73,8 +67,8 @@ internal fun ExampleButton(name: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun CloseButton(onVisibleChange: (Boolean) -> Unit) {
-    IconButton(onClick = { onVisibleChange(false) }) {
+private fun CloseButton(onClose: () -> Unit) {
+    IconButton(onClick = { onClose() }) {
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = null,

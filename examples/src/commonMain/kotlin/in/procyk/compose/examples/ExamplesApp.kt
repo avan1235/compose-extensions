@@ -12,18 +12,31 @@ import `in`.procyk.compose.camera.permission.rememberCameraPermissionState
 internal fun ExamplesApp() = MaterialTheme {
     val cameraPermissionState = rememberCameraPermissionState()
 
-    var visibleCameraPermission by remember { mutableStateOf(false) }
-    var visibleCameraQR by remember { mutableStateOf(false) }
+    var selectedExample by remember { mutableStateOf<Example?>(null) }
 
     ExampleSystemBarsScreen(isCloseAvailable = false) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ExampleButton("camera-permission") { visibleCameraPermission = true }
-            ExampleButton("camera-qr") { visibleCameraQR = true }
+            for (example in Example.entries) {
+                ExampleButton(example.presentableName) { selectedExample = example }
+            }
         }
     }
-    CameraPermission(cameraPermissionState, visibleCameraPermission) { visibleCameraPermission = it }
-    CameraQR(cameraPermissionState, visibleCameraQR) { visibleCameraQR = it }
+    when (selectedExample) {
+        Example.Calendar -> Calendars { selectedExample = null }
+        Example.CameraPermission -> CameraPermission(cameraPermissionState) { selectedExample = null }
+        Example.CameraQR -> CameraQR(cameraPermissionState) { selectedExample = null }
+        Example.QRCode -> QRCode { selectedExample = null }
+        null -> {}
+    }
+}
+
+private enum class Example(val presentableName: String) {
+    Calendar("calendar"),
+    CameraPermission("camera-permission"),
+    CameraQR("camera-qr"),
+    QRCode("qr-code"),
+    ;
 }

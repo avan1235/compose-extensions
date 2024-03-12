@@ -8,9 +8,8 @@ import `in`.procyk.compose.camera.permission.CameraPermissionState
 @Composable
 internal fun CameraPermission(
     cameraPermissionState: CameraPermissionState,
-    visible: Boolean,
-    onVisibleChange: (Boolean) -> Unit,
-) = ExampleSystemBarsScreen(visible, onVisibleChange) {
+    onClose: () -> Unit,
+) = ExampleSystemBarsScreen(onClose) {
     when {
         !cameraPermissionState.isAvailable -> Text("Camera not available")
         cameraPermissionState.permission.isGranted -> Text("Permission granted")

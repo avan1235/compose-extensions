@@ -18,9 +18,8 @@ import `in`.procyk.compose.camera.qr.QRResult
 @Composable
 internal fun CameraQR(
     cameraPermissionState: CameraPermissionState,
-    visible: Boolean,
-    onVisibleChange: (Boolean) -> Unit,
-) = ExampleNoSystemBarsScreen(visible, onVisibleChange) {
+    onClose: () -> Unit,
+) = ExampleNoSystemBarsScreen(onClose) {
     when {
         !cameraPermissionState.isAvailable -> Text("Camera not available")
         !cameraPermissionState.permission.isGranted -> Text("Missing camera permission")
