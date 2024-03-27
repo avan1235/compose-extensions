@@ -5,7 +5,6 @@ include("calendar")
 include("camera-permission")
 include("camera-qr")
 include("util")
-include("qr-code")
 
 pluginManagement {
     repositories {
