@@ -1,8 +1,8 @@
 [![Platforms](https://img.shields.io/badge/mobile-Android%20%7C%20iOS-blue)](https://github.com/avan1235/compose-extensions/releases)
 [![Platforms](https://img.shields.io/badge/desktop-Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://github.com/avan1235/compose-extensions/releases)
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.22-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
-[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.6.0-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
+[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.6.1-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
 [![Maven Central](https://img.shields.io/maven-central/v/in.procyk.compose/camera-qr?label=Maven%20Central&color=green)](https://central.sonatype.com/namespace/in.procyk.compose)
 [![Latest Release](https://img.shields.io/github/v/release/avan1235/compose-extensions?label=Release&color=green)](https://github.com/avan1235/compose-extensions/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/avan1235/compose-extensions/release.yml?label=Build&color=green)](https://github.com/avan1235/compose-extensions/actions/workflows/release.yml)
@@ -18,20 +18,27 @@ are self-contained and allow to deploy compose applications to Android, iOS and 
 
 ## How to use?
 
-To make the extension available, place 
+Select the extension that you find useful in your project and put
 
 ```kotlin
-implementation("in.procyk.compose:extension-name:1.5.10.0")
+implementation("in.procyk.compose:extension-name:1.6.1.0")
 ```
 
 into your `commonMain` source set's dependencies block, where `extension-name` should be replaced with the
 proper name from the list of available extensions.
 
-## Available Extensions
+See some example in [examples](./examples) project, where every extension is added in [build.gradle.kts](./examples/build.gradle.kts).
 
-- `camera-qr` - detect QR codes camera view
+## Extensions
+
+- `calendar` - calendar compose implementation migrated to Kotlin Multiplatform from [ComposeCalendar](https://github.com/boguszpawlowski/ComposeCalendar). See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/Calendars.kt). 
     ```kotlin
-    implementation("in.procyk.compose:camera-qr:1.5.10.0")
+    implementation("in.procyk.compose:calendar:1.6.1.0")
+    ```
+
+- `camera-qr` - detecting QR codes camera view. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraQR.kt).
+    ```kotlin
+    implementation("in.procyk.compose:camera-qr:1.6.1.0")
     ```
     - for Android Application add to [AndroidManifest.xml](./examples/src/androidMain/AndroidManifest.xml)
       ```xml
@@ -59,12 +66,12 @@ proper name from the list of available extensions.
       to your `macOS { ... }` block  and include 
       [runtime-entitlements.plist](./examples/runtime-entitlements.plist) in your project source files
 
-- `camera-permission` - ask for camera permission
+- `camera-permission` - ask for camera permission. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraPermission.kt).
     ```kotlin
-    implementation("in.procyk.compose:camera-permission:1.5.10.0")
+    implementation("in.procyk.compose:camera-permission:1.6.1.0")
     ```
 
-- `util` - handy functions to work with compose
+- `util` - handy functions to work with compose. Explore the [directory](./util/src/commonMain/kotlin/in/procyk/compose/util) to see what cool features are available.
     ```kotlin
-    implementation("in.procyk.compose:util:1.5.10.0")
+    implementation("in.procyk.compose:util:1.6.1.0")
     ```
