@@ -28,7 +28,6 @@ internal fun ExamplesApp() = MaterialTheme {
         Example.Calendar -> Calendars { selectedExample = null }
         Example.CameraPermission -> CameraPermission(cameraPermissionState) { selectedExample = null }
         Example.CameraQR -> CameraQR(cameraPermissionState) { selectedExample = null }
-        Example.QRCode -> QRCode { selectedExample = null }
         null -> {}
     }
 }
@@ -37,6 +36,5 @@ private enum class Example(val presentableName: String) {
     Calendar("calendar"),
     CameraPermission("camera-permission"),
     CameraQR("camera-qr"),
-    QRCode("qr-code"),
     ;
 }

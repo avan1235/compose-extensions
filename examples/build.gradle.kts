@@ -1,9 +1,9 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform") version "1.9.23"
+    kotlin("multiplatform") version "2.0.0-RC1"
     id("com.android.application") version "8.2.2"
-    id("org.jetbrains.compose") version "1.6.1"
+    id("org.jetbrains.compose") version "1.6.2"
 }
 
 group = "in.procyk.compose"
@@ -41,12 +41,11 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.animationGraphics)
 
-            val composeExtensionsVersion = "1.6.1.0"
+            val composeExtensionsVersion = "1.6.2.0"
             implementation("in.procyk.compose:calendar:$composeExtensionsVersion")
             implementation("in.procyk.compose:camera-permission:$composeExtensionsVersion")
             implementation("in.procyk.compose:camera-qr:$composeExtensionsVersion")
             implementation("in.procyk.compose:util:$composeExtensionsVersion")
-            implementation("in.procyk.compose:qr-code:$composeExtensionsVersion")
         }
         androidMain.dependencies {
             api("androidx.activity:activity-compose:1.8.2")
