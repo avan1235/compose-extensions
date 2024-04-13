@@ -21,7 +21,7 @@ are self-contained and allow to deploy compose applications to Android, iOS and 
 Select the extension that you find useful in your project and put
 
 ```kotlin
-implementation("in.procyk.compose:extension-name:1.6.1.1")
+implementation("in.procyk.compose:extension-name:1.6.2.0")
 ```
 
 into your `commonMain` source set's dependencies block, where `extension-name` should be replaced with the
@@ -33,12 +33,12 @@ See some example in [examples](./examples) project, where every extension is add
 
 - `calendar` - calendar compose implementation migrated to Kotlin Multiplatform from [ComposeCalendar](https://github.com/boguszpawlowski/ComposeCalendar). See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/Calendars.kt). 
     ```kotlin
-    implementation("in.procyk.compose:calendar:1.6.1.1")
+    implementation("in.procyk.compose:calendar:1.6.2.0")
     ```
 
 - `camera-qr` - detecting QR codes camera view. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraQR.kt).
     ```kotlin
-    implementation("in.procyk.compose:camera-qr:1.6.1.1")
+    implementation("in.procyk.compose:camera-qr:1.6.2.0")
     ```
     - for Android Application add to [AndroidManifest.xml](./examples/src/androidMain/AndroidManifest.xml)
       ```xml
@@ -68,10 +68,10 @@ See some example in [examples](./examples) project, where every extension is add
 
 - `camera-permission` - ask for camera permission. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraPermission.kt).
     ```kotlin
-    implementation("in.procyk.compose:camera-permission:1.6.1.1")
+    implementation("in.procyk.compose:camera-permission:1.6.2.0")
     ```
 
 - `util` - handy functions to work with compose. Explore the [directory](./util/src/commonMain/kotlin/in/procyk/compose/util) to see what cool features are available.
     ```kotlin
-    implementation("in.procyk.compose:util:1.6.1.1")
+    implementation("in.procyk.compose:util:1.6.2.0")
     ```
