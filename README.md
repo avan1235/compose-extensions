@@ -45,7 +45,8 @@ See some example in [examples](./examples) project, where every extension is add
       <uses-permission android:name="android.permission.CAMERA"/>
       <uses-feature
           android:name="android.hardware.camera"
-          android:required="false"/>```
+          android:required="false"/>
+      ```
 
     - for iOS Application add `Privacy - Camera Usage Description` entry to [Info.plist](./examples/xcode/iosApp/Info.plist)
       ```xml
