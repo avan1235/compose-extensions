@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply true
     alias(libs.plugins.android.library) apply true
@@ -25,9 +27,15 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+    }
+
     applyDefaultHierarchyTemplate()
 
     sourceSets {
+        val stubMain by creating
         val desktopMain by getting
 
         commonMain.dependencies {
@@ -36,6 +44,8 @@ kotlin {
 
             implementation(project(":util"))
         }
+        stubMain.dependsOn(commonMain.get())
+
         androidMain.dependencies {
             implementation(libs.accompanist.permissions)
         }
@@ -43,6 +53,7 @@ kotlin {
             implementation(libs.webcam.capture)
             implementation(libs.webcam.capture.driver.native)
         }
+        wasmJsMain.get().dependsOn(stubMain)
     }
 }
 
