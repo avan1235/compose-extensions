@@ -1,8 +1,8 @@
 [![Platforms](https://img.shields.io/badge/mobile-Android%20%7C%20iOS-blue)](https://github.com/avan1235/compose-extensions/releases)
 [![Platforms](https://img.shields.io/badge/desktop-Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://github.com/avan1235/compose-extensions/releases)
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
-[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.6.1-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-RC2-green.svg?logo=kotlin)](https://github.com/JetBrains/kotlin)
+[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.6.10-beta03-green.svg?logo=jetpack-compose)](https://github.com/JetBrains/compose-multiplatform)
 [![Maven Central](https://img.shields.io/maven-central/v/in.procyk.compose/camera-qr?label=Maven%20Central&color=green)](https://central.sonatype.com/namespace/in.procyk.compose)
 [![Latest Release](https://img.shields.io/github/v/release/avan1235/compose-extensions?label=Release&color=green)](https://github.com/avan1235/compose-extensions/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/avan1235/compose-extensions/release.yml?label=Build&color=green)](https://github.com/avan1235/compose-extensions/actions/workflows/release.yml)
