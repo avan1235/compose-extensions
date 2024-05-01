@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply true
     alias(libs.plugins.android.library) apply true
     alias(libs.plugins.compose.multiplatform) apply true
+    alias(libs.plugins.compose.compiler) apply true
 
     id("convention.publication") apply true
 }

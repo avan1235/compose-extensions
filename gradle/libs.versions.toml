@@ -10,12 +10,12 @@ android-minSdk = "26"
 android-targetSdk = "33"
 barcodeScanning = "17.2.0"
 cameraX = "1.3.0"
-compose = "1.6.2"
+compose = "1.6.10-beta03"
 # @keep
-compose-extensions = "1.6.2.1"
+compose-extensions = "1.6.10-beta03.0"
 gradle-versions = "0.51.0"
 # @pin
-kotlin = "2.0.0-RC1"
+kotlin = "2.0.0-RC2"
 kotlinxDatetime = "0.6.0-RC.2"
 version-catalog-update = "0.8.4"
 webcamCapture = "0.3.12"
@@ -37,6 +37,7 @@ zxing-javase = { module = "com.google.zxing:javase", version.ref = "zxing-core" 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradle-versions" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
