@@ -73,7 +73,7 @@ fun <T : SelectionState> DefaultDay(
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = date.dayOfMonth.toString())
+            Text(text = date.day.toString())
         }
     }
 }

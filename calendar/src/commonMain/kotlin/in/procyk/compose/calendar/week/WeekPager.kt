@@ -94,7 +94,7 @@ internal fun <T : SelectionState> WeekPager(
         ) {
             items(
                 count = pagerCount,
-                key = { index -> weekListState.getWeekForPage(index).start.let { "${it.month}-${it.dayOfMonth}" } },
+                key = { index -> weekListState.getWeekForPage(index).start.let { "${it.month}-${it.day}" } },
             ) { index ->
                 WeekContent(
                     modifier = Modifier.fillParentMaxWidth(),
