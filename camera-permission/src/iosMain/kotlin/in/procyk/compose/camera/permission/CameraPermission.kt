@@ -3,23 +3,26 @@ package `in`.procyk.compose.camera.permission
 import androidx.compose.runtime.*
 import `in`.procyk.compose.camera.permission.CameraPermission.Denied
 import `in`.procyk.compose.camera.permission.CameraPermission.Granted
-import `in`.procyk.compose.util.OnceLaunchedEffect
 import platform.AVFoundation.*
+import platform.Foundation.NSNotificationCenter
+import platform.Foundation.NSOperationQueue
+import platform.UIKit.UIApplicationDidBecomeActiveNotification
+import platform.darwin.dispatch_async
+import platform.darwin.dispatch_get_main_queue
 
 @Composable
 actual fun rememberCameraPermissionState(): CameraPermissionState {
-    var cameraPermission by remember { mutableStateOf(Denied) }
+    var cameraPermission by remember { mutableStateOf(currentCameraPermission()) }
 
-    OnceLaunchedEffect {
-        cameraPermission = when (AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)) {
-            AVAuthorizationStatusAuthorized -> Granted
-            AVAuthorizationStatusDenied,
-            AVAuthorizationStatusRestricted,
-            AVAuthorizationStatusNotDetermined,
-            -> Denied
+    DisposableEffect(Unit) {
+        cameraPermission = currentCameraPermission()
+        val observer = NSNotificationCenter.defaultCenter.addObserverForName(
+            name = UIApplicationDidBecomeActiveNotification,
+            `object` = null,
+            queue = NSOperationQueue.mainQueue,
+        ) { _ -> cameraPermission = currentCameraPermission() }
 
-            else -> error("Unexpected AVAuthorizationStatus")
-        }
+        onDispose { NSNotificationCenter.defaultCenter.removeObserver(observer) }
     }
 
     return remember {
@@ -30,9 +33,17 @@ actual fun rememberCameraPermissionState(): CameraPermissionState {
 
             override fun launchRequest() {
                 AVCaptureDevice.requestAccessForMediaType(mediaType = AVMediaTypeVideo) { success ->
-                    cameraPermission = if (success) Granted else Denied
+                    dispatch_async(dispatch_get_main_queue()) {
+                        cameraPermission = if (success) Granted else Denied
+                    }
                 }
             }
         }
     }
 }
+
+private fun currentCameraPermission(): CameraPermission =
+    when (AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)) {
+        AVAuthorizationStatusAuthorized -> Granted
+        else -> Denied
+    }
