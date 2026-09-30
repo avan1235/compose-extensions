@@ -1,5 +1,9 @@
 rootProject.name = "examples"
 
+// TODO: remove once compose-extensions built with the current versions is published
+includeBuild("..")
+include("androidApp")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()

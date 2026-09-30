@@ -1,9 +1,11 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform") version "2.0.0-RC1"
-    id("com.android.application") version "8.2.2"
-    id("org.jetbrains.compose") version "1.6.2"
+    alias(libs.plugins.kotlin.multiplatform) apply true
+    alias(libs.plugins.android.kotlin.multiplatform.library) apply true
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.compose.multiplatform) apply true
+    alias(libs.plugins.compose.compiler) apply true
 }
 
 group = "in.procyk.compose"
@@ -12,16 +14,21 @@ version = "1.0.0"
 kotlin {
     jvm("desktop")
 
-    androidTarget()
+    jvmToolchain(17)
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    android {
+        namespace = "in.procyk.compose.examples"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+
+        androidResources {
+            enable = true
+        }
+    }
 
     applyDefaultHierarchyTemplate()
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -35,46 +42,26 @@ kotlin {
         val desktopMain by getting
 
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.animationGraphics)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.material.icons.extended)
+            implementation(libs.compose.animation.graphics)
 
-            val composeExtensionsVersion = "1.6.2.0"
-            implementation("in.procyk.compose:calendar:$composeExtensionsVersion")
-            implementation("in.procyk.compose:camera-permission:$composeExtensionsVersion")
-            implementation("in.procyk.compose:camera-qr:$composeExtensionsVersion")
-            implementation("in.procyk.compose:util:$composeExtensionsVersion")
+            implementation(libs.compose.extensions.calendar)
+            implementation(libs.compose.extensions.camera.permission)
+            implementation(libs.compose.extensions.camera.qr)
+            implementation(libs.compose.extensions.util)
         }
         androidMain.dependencies {
-            api("androidx.activity:activity-compose:1.8.2")
-            api("androidx.appcompat:appcompat:1.6.1")
-            api("androidx.core:core-ktx:1.12.0")
+            api(libs.androidx.activity.compose)
+            api(libs.androidx.appcompat.appcompat)
+            api(libs.androidx.core.ktx)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
-    }
-}
-
-android {
-    compileSdk = 34
-    namespace = "in.procyk.compose.examples"
-
-    defaultConfig {
-        minSdk = 26
-        targetSdk = 34
-        applicationId = "in.procyk.compose.examples.Application"
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        jvmToolchain(17)
     }
 }
 

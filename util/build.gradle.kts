@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply true
-    alias(libs.plugins.android.library) apply true
+    alias(libs.plugins.android.kotlin.multiplatform.library) apply true
     alias(libs.plugins.compose.multiplatform) apply true
     alias(libs.plugins.compose.compiler) apply true
 
@@ -21,10 +21,13 @@ version = libs.versions.compose.extensions.get()
 kotlin {
     jvm("desktop")
 
-    androidTarget {
-        publishLibraryVariants("release")
+    jvmToolchain(17)
+
+    android {
+        namespace = "in.procyk.compose.util"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
 
@@ -37,27 +40,11 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
         }
         androidMain.dependencies {
             implementation(libs.accompanist.systemuicontroller)
         }
-    }
-}
-
-android {
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    namespace = "in.procyk.compose.util"
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        jvmToolchain(17)
     }
 }
