@@ -39,7 +39,6 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     sourceSets {
-        val stubMain by creating
         val desktopMain by getting
 
         commonMain.dependencies {
@@ -48,7 +47,6 @@ kotlin {
 
             implementation(project(":util"))
         }
-        stubMain.dependsOn(commonMain.get())
 
         androidMain.dependencies {
             implementation(libs.androidx.camera)
@@ -64,6 +62,5 @@ kotlin {
             implementation(libs.webcam.capture.driver.native)
             implementation(libs.zxing.javase)
         }
-        wasmJsMain.get().dependsOn(stubMain)
     }
 }
