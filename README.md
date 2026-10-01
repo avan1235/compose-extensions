@@ -27,20 +27,20 @@ implementation("in.procyk.compose:extension-name:1.12.1.2")
 into your `commonMain` source set's dependencies block, where `extension-name` should be replaced with the
 proper name from the list of available extensions.
 
-See some example in [examples](./examples) project, where every extension is added in [build.gradle.kts](./examples/build.gradle.kts).
+See some example in [examples](./examples) project, where every extension is added in [build.gradle.kts](./examples/shared/build.gradle.kts).
 
 ## Extensions
 
-- `calendar` - calendar compose implementation migrated to Kotlin Multiplatform from [ComposeCalendar](https://github.com/boguszpawlowski/ComposeCalendar). See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/Calendars.kt). 
+- `calendar` - calendar compose implementation migrated to Kotlin Multiplatform from [ComposeCalendar](https://github.com/boguszpawlowski/ComposeCalendar). See sample usage [here](./examples/shared/src/commonMain/kotlin/in/procyk/compose/examples/Calendars.kt). 
     ```kotlin
     implementation("in.procyk.compose:calendar:1.12.1.2")
     ```
 
-- `camera-qr` - detecting QR codes camera view. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraQR.kt).
+- `camera-qr` - detecting QR codes camera view. See sample usage [here](./examples/shared/src/commonMain/kotlin/in/procyk/compose/examples/CameraQR.kt).
     ```kotlin
     implementation("in.procyk.compose:camera-qr:1.12.1.2")
     ```
-    - for Android Application add to [AndroidManifest.xml](./examples/src/androidMain/AndroidManifest.xml)
+    - for Android Application add to [AndroidManifest.xml](./examples/androidApp/src/main/AndroidManifest.xml)
       ```xml
       <uses-permission android:name="android.permission.CAMERA"/>
       <uses-feature
@@ -48,13 +48,13 @@ See some example in [examples](./examples) project, where every extension is add
           android:required="false"/>
       ```
 
-    - for iOS Application add `Privacy - Camera Usage Description` entry to [Info.plist](./examples/xcode/iosApp/Info.plist)
+    - for iOS Application add `Privacy - Camera Usage Description` entry to [Info.plist](./examples/iosApp/iosApp/Info.plist)
       ```xml
       <key>NSCameraUsageDescription</key>
       <string></string>
       ```
    
-    - for Desktop Application add to [build.gradle.kts](./examples/build.gradle.kts)
+    - for Desktop Application add to [build.gradle.kts](./examples/desktopApp/build.gradle.kts)
       ```kotlin
       runtimeEntitlementsFile.set(project.file("runtime-entitlements.plist"))
       infoPlist {
@@ -65,9 +65,9 @@ See some example in [examples](./examples) project, where every extension is add
       }
       ```
       to your `macOS { ... }` block  and include 
-      [runtime-entitlements.plist](./examples/runtime-entitlements.plist) in your project source files
+      [runtime-entitlements.plist](./examples/desktopApp/runtime-entitlements.plist) in your project source files
 
-- `camera-permission` - ask for camera permission. See sample usage [here](./examples/src/commonMain/kotlin/in/procyk/compose/examples/CameraPermission.kt).
+- `camera-permission` - ask for camera permission. See sample usage [here](./examples/shared/src/commonMain/kotlin/in/procyk/compose/examples/CameraPermission.kt).
     ```kotlin
     implementation("in.procyk.compose:camera-permission:1.12.1.2")
     ```
