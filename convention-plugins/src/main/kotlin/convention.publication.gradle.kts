@@ -1,92 +1,47 @@
-import java.util.*
+import com.vanniktech.maven.publish.Checksum
 
 plugins {
-    id("maven-publish") apply true
-    id("signing") apply true
+    id("com.vanniktech.maven.publish")
 }
 
-ext["signing.keyId"] = null
-ext["signing.password"] = null
-ext["signing.key"] = null
-ext["ossrhUsername"] = null
-ext["ossrhPassword"] = null
+mavenPublishing {
+    checksums(Checksum.MD5, Checksum.SHA1, Checksum.SHA256, Checksum.SHA512)
+    excludeSignatureChecksums(false)
+    publishToMavenCentral(automaticRelease = true)
 
-val secretPropsFile = project.rootProject.file("local.properties")
-if (secretPropsFile.exists()) {
-    secretPropsFile.reader().use {
-        Properties().apply { load(it) }
-    }.onEach { (name, value) ->
-        ext[name.toString()] = value
-    }
-} else {
-    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
-    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
-    ext["signing.key"] = System.getenv("SIGNING_KEY")
-    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
-    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
-}
+    signAllPublications()
 
-operator fun ExtraPropertiesExtension.invoke(name: String) = ext[name]?.toString()
+    pom {
+        val githubUrl = "https://github.com/avan1235/compose-extensions"
 
-afterEvaluate {
-    publishing {
-        repositories {
-            maven {
-                name = "sonatype"
-                setUrl("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = ext("ossrhUsername")
-                    password = ext("ossrhPassword")
-                }
-            }
-            mavenLocal()
-        }
+        name.set("Compose Multiplatform Extensions")
+        description.set("Helper functions and extensions when working with compose-multiplatform projects")
+        inceptionYear.set("2023")
+        url.set(githubUrl)
 
-        publications.withType<MavenPublication> {
-            val publication = this
-            val javadocJar = tasks.register("${publication.name}JavadocJar", Jar::class) {
-                archiveClassifier = "javadoc"
-                archiveBaseName = "${archiveBaseName.get()}-${publication.name}"
-            }
-            artifact(javadocJar)
-            pom {
-                val githubUrl = "https://github.com/avan1235/compose-extensions"
-
-                name = "Compose Multiplatform Extensions"
-                description = "Helper functions and extensions when working with compose-multiplatform projects"
-                url = githubUrl
-
-                licenses {
-                    license {
-                        name = "MIT"
-                        url = "https://opensource.org/licenses/MIT"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "avan1235"
-                        name = "Maciej Procyk"
-                        email = "maciej@procyk.in"
-                        url = "https://procyk.in"
-                    }
-                }
-                issueManagement {
-                    system = "GitHub"
-                    url = "$githubUrl/issues"
-                }
-                scm {
-                    url = githubUrl
-                }
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
         }
-    }
-
-    signing {
-        useInMemoryPgpKeys(
-            ext("signing.keyId"),
-            ext("signing.key"),
-            ext("signing.password"),
-        )
-        sign(publishing.publications)
+        developers {
+            developer {
+                id.set("avan1235")
+                name.set("Maciej Procyk")
+                email.set("maciej@procyk.in")
+                url.set("https://procyk.in")
+            }
+        }
+        issueManagement {
+            system.set("GitHub")
+            url.set("$githubUrl/issues")
+        }
+        scm {
+            url.set(githubUrl)
+            connection.set("scm:git:git://github.com/avan1235/compose-extensions.git")
+            developerConnection.set("scm:git:ssh://git@github.com/avan1235/compose-extensions.git")
+        }
     }
 }
