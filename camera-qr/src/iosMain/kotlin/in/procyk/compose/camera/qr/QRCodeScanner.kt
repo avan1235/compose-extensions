@@ -16,10 +16,14 @@ import platform.CoreGraphics.CGFloat
 import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.QuartzCore.CATransaction
+import platform.UIKit.UIApplication
 import platform.UIKit.UIColor
 import platform.UIKit.UIDevice
 import platform.UIKit.UIDeviceOrientation.*
 import platform.UIKit.UIDeviceOrientationDidChangeNotification
+import platform.UIKit.UIInterfaceOrientationLandscapeLeft
+import platform.UIKit.UIInterfaceOrientationLandscapeRight
+import platform.UIKit.UIInterfaceOrientationPortraitUpsideDown
 import platform.UIKit.UIView
 import platform.darwin.NSObject
 import platform.darwin.NSObjectProtocol
@@ -103,10 +107,20 @@ private fun CameraView(
     val cameraPreviewLayer = remember { AVCaptureVideoPreviewLayer(session = captureSession) }
     val sessionQueue = remember { dispatch_queue_create("in.procyk.compose.camera.qr.session", null) }
 
+    val orientationObserver = remember(camera, cameraPreviewLayer) {
+        OrientationObserver(camera, cameraPreviewLayer, metadataOutput)
+    }
+    DisposableEffect(orientationObserver) {
+        onDispose { orientationObserver.dispose() }
+    }
+
     DisposableEffect(captureSession) {
         sessionQueue.async {
             captureSession.startRunning()
-            dispatch_async(dispatch_get_main_queue()) { currentOnIsLoadingChange(false) }
+            dispatch_async(dispatch_get_main_queue()) {
+                orientationObserver.update()
+                currentOnIsLoadingChange(false)
+            }
         }
         onDispose {
             sessionQueue.async {
@@ -115,14 +129,9 @@ private fun CameraView(
         }
     }
 
-    DisposableEffect(camera, cameraPreviewLayer) {
-        val orientationObserver = OrientationObserver(camera, cameraPreviewLayer, metadataOutput)
-        onDispose { orientationObserver.dispose() }
-    }
-
     UIKitView(
         factory = {
-            CameraPreviewView(cameraPreviewLayer).apply {
+            CameraPreviewView(cameraPreviewLayer, onLayoutChange = orientationObserver::update).apply {
                 cameraPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             }
         },
@@ -134,10 +143,17 @@ private fun CameraView(
 @OptIn(ExperimentalForeignApi::class)
 private class CameraPreviewView(
     private val previewLayer: AVCaptureVideoPreviewLayer,
+    private val onLayoutChange: () -> Unit,
 ) : UIView(frame = CGRectMake(0.0, 0.0, 0.0, 0.0)) {
 
     init {
         layer.addSublayer(previewLayer)
+    }
+
+    override fun didMoveToWindow() {
+        super.didMoveToWindow()
+        // interface orientation is known only when attached to a window
+        if (window != null) onLayoutChange()
     }
 
     override fun layoutSubviews() {
@@ -146,6 +162,7 @@ private class CameraPreviewView(
         CATransaction.setDisableActions(true)
         previewLayer.setFrame(bounds)
         CATransaction.commit()
+        onLayoutChange()
     }
 }
 
@@ -167,6 +184,7 @@ private class OrientationObserver(
 
         else -> null
     }
+    private var disposed = false
     private val observer: NSObjectProtocol
 
     init {
@@ -182,7 +200,8 @@ private class OrientationObserver(
         update()
     }
 
-    private fun update() {
+    fun update() {
+        if (disposed) return
         val previewAngle: CGFloat
         val captureAngle: CGFloat
         if (coordinator != null) {
@@ -194,7 +213,13 @@ private class OrientationObserver(
                 UIDeviceOrientationLandscapeLeft -> 0.0
                 UIDeviceOrientationLandscapeRight -> 180.0
                 UIDeviceOrientationPortraitUpsideDown -> 270.0
-                else -> return
+                // orientation unknown yet (e.g. right after start or with rotation lock), use interface orientation
+                else -> when (UIApplication.sharedApplication.statusBarOrientation) {
+                    UIInterfaceOrientationLandscapeLeft -> 180.0
+                    UIInterfaceOrientationLandscapeRight -> 0.0
+                    UIInterfaceOrientationPortraitUpsideDown -> 270.0
+                    else -> 90.0
+                }
             }
             captureAngle = previewAngle
         }
@@ -203,6 +228,8 @@ private class OrientationObserver(
     }
 
     fun dispose() {
+        if (disposed) return
+        disposed = true
         NSNotificationCenter.defaultCenter.removeObserver(observer)
         device.endGeneratingDeviceOrientationNotifications()
     }
