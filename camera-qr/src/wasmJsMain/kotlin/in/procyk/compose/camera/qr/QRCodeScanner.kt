@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.viewinterop.WebElementView
+import androidx.compose.ui.viewinterop.HtmlElementView
 import `in`.procyk.compose.util.OnceLaunchedEffect
 import kotlinx.browser.document
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
 import kotlin.coroutines.resume
 import kotlin.math.roundToInt
 
@@ -63,24 +66,43 @@ private fun CameraView(
     val currentOnResult by rememberUpdatedState(onResult)
     val currentOnIsLoadingChange by rememberUpdatedState(onIsLoadingChange)
     val elementId = remember { "in-procyk-compose-camera-qr-${nextScannerElementId++}" }
+    val anchorId = remember(elementId) { "$elementId-anchor" }
+    val cameraElement = remember(elementId) {
+        (document.createElement("div") as HTMLDivElement).apply {
+            id = elementId
+            style.width = "100%"
+            style.height = "100%"
+            style.overflowX = "hidden"
+            style.overflowY = "hidden"
+        }
+    }
 
-    WebElementView(
+    // Compose places interop elements in a container above its canvas, which would hide any Compose content
+    // drawn over the scanner. This element serves only as a transparent anchor that Compose positions and clips,
+    // while the camera preview is rendered below the canvas (see placeBelowComposeCanvas), which gets cleared here.
+    HtmlElementView(
         factory = {
             (document.createElement("div") as HTMLDivElement).apply {
-                id = elementId
+                id = anchorId
                 style.width = "100%"
                 style.height = "100%"
-                style.overflowX = "hidden"
-                style.overflowY = "hidden"
+                style.setProperty("pointer-events", "none")
             }
         },
-        modifier = Modifier.fillMaxSize(),
-        update = { element ->
-            element.style.backgroundColor = backgroundColor.toCssColor()
-            if (contentDescription != null) element.setAttribute("aria-label", contentDescription)
-            else element.removeAttribute("aria-label")
+        modifier = Modifier
+            .fillMaxSize()
+            .drawBehind { drawRect(Color.Black, blendMode = BlendMode.Clear) },
+        update = {
+            cameraElement.style.backgroundColor = backgroundColor.toCssColor()
+            if (contentDescription != null) cameraElement.setAttribute("aria-label", contentDescription)
+            else cameraElement.removeAttribute("aria-label")
         },
     )
+
+    DisposableEffect(cameraElement) {
+        val placement = placeBelowComposeCanvas(anchorId, cameraElement)
+        onDispose { removeFromBelowComposeCanvas(placement) }
+    }
 
     DisposableEffect(elementId) {
         var handleNext = true
@@ -115,6 +137,69 @@ private suspend fun awaitHtml5QrcodeLibrary(): Boolean = suspendCancellableCorou
 }
 
 private const val HTML5_QRCODE_URL: String = "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+
+/**
+ * Inserts the [element] below the Compose canvas (as soon as the anchor with the given [anchorId] gets attached
+ * to the document) and keeps its position, size, clipping and visibility in sync with the Compose interop wrapper
+ * of the anchor, so that the Compose content drawn above the scanner stays visible and receives the input events.
+ */
+private fun placeBelowComposeCanvas(anchorId: String, element: HTMLElement): JsAny = js(
+    """{
+    const placement = { disposed: false, observer: null, mirror: null, underlay: null };
+    const attach = () => {
+        if (placement.disposed) return;
+        const anchor = document.getElementById(anchorId);
+        const wrapper = anchor ? anchor.parentElement : null;
+        const interopContainer = wrapper ? wrapper.parentElement : null;
+        const positioningContainer = interopContainer ? interopContainer.parentElement : null;
+        if (!positioningContainer) {
+            window.requestAnimationFrame(attach);
+            return;
+        }
+        wrapper.style.setProperty('pointer-events', 'none');
+
+        const underlayAttribute = 'data-in-procyk-compose-underlay';
+        let underlay = Array.from(positioningContainer.children).find((child) => child.hasAttribute(underlayAttribute));
+        if (!underlay) {
+            underlay = document.createElement('div');
+            underlay.setAttribute(underlayAttribute, '');
+            underlay.style.position = 'absolute';
+            underlay.style.top = '0';
+            underlay.style.left = '0';
+            // being the first positioned child, it's painted below the Compose canvas
+            positioningContainer.insertBefore(underlay, positioningContainer.firstChild);
+        }
+
+        const mirror = document.createElement('div');
+        const sync = () => {
+            mirror.style.cssText = wrapper.style.cssText;
+            mirror.style.setProperty('pointer-events', 'none');
+        };
+        sync();
+        mirror.appendChild(element);
+        underlay.appendChild(mirror);
+
+        const observer = new MutationObserver(sync);
+        observer.observe(wrapper, { attributes: true, attributeFilter: ['style'] });
+
+        placement.observer = observer;
+        placement.mirror = mirror;
+        placement.underlay = underlay;
+    };
+    attach();
+    return placement;
+}"""
+)
+
+private fun removeFromBelowComposeCanvas(placement: JsAny): Unit = js(
+    """{
+    placement.disposed = true;
+    if (placement.observer) placement.observer.disconnect();
+    if (placement.mirror) placement.mirror.remove();
+    const underlay = placement.underlay;
+    if (underlay && underlay.childElementCount === 0) underlay.remove();
+}"""
+)
 
 private fun detectVideoInput(onResult: (Boolean) -> Unit): Unit = js(
     """{
